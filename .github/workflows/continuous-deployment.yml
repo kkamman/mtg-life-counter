@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: npm run build -- --base-href "/mtg-life-counter/"
 
       - name: Test
         run: npm run test
