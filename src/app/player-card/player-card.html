@@ -1,27 +1,31 @@
 <mat-card class="h-full">
   <div class="h-full flex items-center justify-center p-8 gap-4">
-    <button
-      matIconButton
-      aria-label="Remove 1 life"
-      (click)="removeLife()"
-      [disabled]="life() <= minLife"
-    >
-      <mat-icon>remove</mat-icon>
-    </button>
-
-    <div>
-      <svg class="w-full" [attr.viewBox]="lifeTextViewBox$ | async">
-        <text #lifeText>{{ life() }}</text>
-      </svg>
+    <div class="grow aspect-square">
+      <button
+        class="w-full! h-full!"
+        matIconButton
+        aria-label="Remove 1 life"
+        (click)="removeLife()"
+        [disabled]="life() <= minLife"
+      >
+        <mat-icon class="md:transform-[scale(2)] lg:transform-[scale(3)]">remove</mat-icon>
+      </button>
     </div>
 
-    <button
-      matIconButton
-      aria-label="Add 1 life"
-      (click)="addLife()"
-      [disabled]="life() >= maxLife"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
+    <div class="flex items-center justify-center grow">
+      <span class="text-xl md:text-6xl lg:text-9xl">{{ life() }}</span>
+    </div>
+
+    <div class="grow aspect-square">
+      <button
+        class="w-full! h-full!"
+        matIconButton
+        aria-label="Add 1 life"
+        (click)="addLife()"
+        [disabled]="life() >= maxLife"
+      >
+        <mat-icon class="md:transform-[scale(2)] lg:transform-[scale(3)]">add</mat-icon>
+      </button>
+    </div>
   </div>
 </mat-card>
