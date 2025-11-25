@@ -1,4 +1,3 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
@@ -6,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-player-card',
-  imports: [MatCard, MatIconButton, MatIcon, AsyncPipe],
+  imports: [MatCard, MatIconButton, MatIcon],
   templateUrl: './player-card.html',
   host: {
     class: 'block',

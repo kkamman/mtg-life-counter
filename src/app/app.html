@@ -1,1 +1,21 @@
-<app-player-grid class="h-full" />
+<mat-sidenav-container class="h-full">
+  <mat-sidenav #sidenav [autoFocus]="false">
+    <div class="flex items-center justify-between p-4 max-w-svw">
+      <h1>Settings</h1>
+      <button matIconButton (click)="sidenav.close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <app-settings />
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="h-full flex flex-col p-2">
+      <div class="flex justify-end p-1">
+        <button matIconButton (click)="sidenav.open()">
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div>
+      <app-player-grid class="grow" />
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

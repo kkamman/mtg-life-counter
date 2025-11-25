@@ -1,0 +1,13 @@
+<div class="flex flex-col gap-1">
+  <label class="block">Theme</label>
+  <mat-radio-group
+    name="theme"
+    aria-label="Theme"
+    [field]="settingsForm.theme"
+    class="flex flex-col gap-1"
+  >
+    <mat-radio-button value="system">System</mat-radio-button>
+    <mat-radio-button value="light">Light</mat-radio-button>
+    <mat-radio-button value="dark">Dark</mat-radio-button>
+  </mat-radio-group>
+</div>
