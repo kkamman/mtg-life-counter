@@ -1,5 +1,5 @@
 <mat-card class="h-full">
-  <div class="h-full flex items-center justify-center p-8 gap-4">
+  <div class="h-full flex flex-row portrait:flex-col-reverse items-center justify-center p-8 gap-4">
     <div class="grow aspect-square">
       <button
         class="w-full! h-full!"
@@ -8,12 +8,12 @@
         (click)="removeLife()"
         [disabled]="life() <= minLife"
       >
-        <mat-icon class="md:transform-[scale(2)] lg:transform-[scale(3)]">remove</mat-icon>
+        <mat-icon class="sm:transform-[scale(2)] md:transform-[scale(3)]">remove</mat-icon>
       </button>
     </div>
 
     <div class="flex items-center justify-center grow basis-0">
-      <span class="text-xl sm:text-3xl md:text-6xl lg:text-9xl text-shadow-lg">{{ life() }}</span>
+      <span class="text-3xl sm:text-6xl md:text-9xl text-shadow-lg">{{ life() }}</span>
     </div>
 
     <div class="grow aspect-square">
@@ -24,7 +24,7 @@
         (click)="addLife()"
         [disabled]="life() >= maxLife"
       >
-        <mat-icon class="md:transform-[scale(2)] lg:transform-[scale(3)]">add</mat-icon>
+        <mat-icon class="sm:transform-[scale(2)] md:transform-[scale(3)]">add</mat-icon>
       </button>
     </div>
   </div>
