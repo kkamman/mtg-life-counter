@@ -1,4 +1,5 @@
-import { effect, Injectable, signal } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { effect, inject, Injectable, signal } from '@angular/core';
 
 export const themes = ['system', 'light', 'dark'] as const;
 
@@ -11,7 +12,13 @@ export class ThemeStore {
   private readonly defaultTheme = 'system';
   private readonly localStorageKey = 'theme';
 
+  private readonly mediaMatcher = inject(MediaMatcher);
+
   public readonly theme = signal<Theme>(this.defaultTheme);
+
+  public readonly systemTheme = signal<Exclude<Theme, 'system'>>(
+    this.mediaMatcher.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  );
 
   constructor() {
     this.theme.set(this.readThemeFromLocalStorage() ?? this.defaultTheme);
