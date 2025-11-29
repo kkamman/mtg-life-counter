@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LayoutStore } from '../core/layout-store';
 import { PlayerCard } from '../player-card/player-card';
 
 @Component({
@@ -9,4 +10,8 @@ import { PlayerCard } from '../player-card/player-card';
     class: 'block',
   },
 })
-export class PlayerGrid {}
+export class PlayerGrid {
+  private readonly layoutStore = inject(LayoutStore);
+
+  protected readonly layout = this.layoutStore.layout;
+}

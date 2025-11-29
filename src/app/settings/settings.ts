@@ -2,11 +2,13 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { disabled, Field, form } from '@angular/forms/signals';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { LayoutStore } from '../core/layout-store';
 import { ThemeStore } from '../core/theme-store';
 
 interface SettingsData {
   theme: 'system' | 'light' | 'dark';
   isFullscreen: boolean;
+  isFlippedLayout: boolean;
 }
 
 @Component({
@@ -19,10 +21,12 @@ interface SettingsData {
 })
 export class Settings {
   private readonly themeStore = inject(ThemeStore);
+  private readonly layoutStore = inject(LayoutStore);
 
   private readonly settingsModel = signal<SettingsData>({
     theme: this.themeStore.theme(),
     isFullscreen: document.fullscreenElement !== null,
+    isFlippedLayout: this.layoutStore.layout().isFlipped,
   });
 
   protected readonly settingsForm = form(this.settingsModel, (settings) => {
@@ -33,6 +37,12 @@ export class Settings {
 
   constructor() {
     effect(() => this.themeStore.theme.set(this.settingsForm.theme().value()));
+    effect(() => {
+      this.layoutStore.layout.update((layout) => ({
+        ...layout,
+        isFlipped: this.settingsForm.isFlippedLayout().value(),
+      }));
+    });
     this.updateIsFullscreenOnChange();
   }
 
