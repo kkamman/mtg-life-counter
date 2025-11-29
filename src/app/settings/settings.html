@@ -11,3 +11,11 @@
     <mat-radio-button value="dark">Dark</mat-radio-button>
   </mat-radio-group>
 </div>
+
+<mat-slide-toggle
+  name="isFullscreen"
+  aria-label="Is fullscreen enabled"
+  [field]="settingsForm.isFullscreen"
+  (click)="toggleFullscreen()"
+  >Fullscreen</mat-slide-toggle
+>
