@@ -2,10 +2,31 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@utility text-border-lg-* {
+  text-shadow: -2px -2px 0 --value(--color- *), 2px -2px 0 --value(--color- *),
+    -2px 2px 0 --value(--color- *), 2px 2px 0 --value(--color- *), -3px 0px 0 --value(--color- *),
+    3px 0px 0 --value(--color- *), 0px -3px 0 --value(--color- *), 0px 3px 0 --value(--color- *);
+}
+
+@utility text-border-md-* {
+  text-shadow: -1px -1px 0 --value(--color- *), 1px -1px 0 --value(--color- *),
+    -1px 1px 0 --value(--color- *), 1px 1px 0 --value(--color- *), -1.5px 0px 0 --value(--color- *),
+    1.5px 0px 0 --value(--color- *), 0px -1.5px 0 --value(--color- *),
+    0px 1.5px 0 --value(--color- *);
+}
+
+@utility text-border-sm-* {
+  text-shadow: -0.5px -0.5px 0 --value(--color- *), 0.5px -0.5px 0 --value(--color- *),
+    -0.5px 0.5px 0 --value(--color- *), 0.5px 0.5px 0 --value(--color- *),
+    -0.75px 0px 0 --value(--color- *), 0.75px 0px 0 --value(--color- *),
+    0px -0.75px 0 --value(--color- *), 0px 0.75px 0 --value(--color- *);
+}
+
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;

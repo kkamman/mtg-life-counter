@@ -9,15 +9,20 @@
         [disabled]="life() <= minLife"
       >
         <mat-icon
-          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)]"
+          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)] text-border-sm-gray-200 dark:text-border-sm-gray-800"
           >remove</mat-icon
         >
       </button>
     </div>
 
-    <div class="flex items-center justify-center grow basis-0">
+    <div class="flex flex-col items-center justify-center grow basis-0">
       <span
-        class="text-3xl landscape:sm:text-6xl landscape:md:text-9xl portrait:[@media(min-height:40rem)]:text-6xl portrait:[@media(min-height:48rem)]:text-9xl text-shadow-lg"
+        class="landscape:sm:text-xl landscape:md:text-3xl portrait:[@media(min-height:40rem)]:text-xl portrait:[@media(min-height:48rem)]:text-3xl text-border-md-gray-200 dark:text-border-md-gray-800"
+        [class.invisible]="lifeChange() === 0"
+        >{{ lifeChange() }}</span
+      >
+      <span
+        class="text-3xl landscape:sm:text-6xl landscape:md:text-9xl portrait:[@media(min-height:40rem)]:text-6xl portrait:[@media(min-height:48rem)]:text-9xl text-border-lg-gray-200 dark:text-border-lg-gray-800"
         >{{ life() }}</span
       >
     </div>
@@ -31,7 +36,7 @@
         [disabled]="life() >= maxLife"
       >
         <mat-icon
-          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)]"
+          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)] text-border-sm-gray-200 dark:text-border-sm-gray-800"
           >add</mat-icon
         >
       </button>
