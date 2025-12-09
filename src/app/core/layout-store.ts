@@ -2,6 +2,7 @@ import { effect, Injectable, signal } from '@angular/core';
 
 export interface Layout {
   isFlipped: boolean;
+  playerCount: number;
 }
 
 @Injectable({
@@ -10,12 +11,12 @@ export interface Layout {
 export class LayoutStore {
   private readonly localStorageKey = 'layout';
 
-  public readonly layout = signal<Layout>({ isFlipped: true });
+  public readonly layout = signal<Layout>({ isFlipped: true, playerCount: 4 });
 
   constructor() {
     const localStorageLayout = this.readLayoutFromLocalStorage();
     if (localStorageLayout) {
-      this.layout.set(localStorageLayout);
+      this.layout.update((layout) => ({ ...layout, ...localStorageLayout }));
     }
     effect(() => this.saveLayoutToLocalStorage(this.layout()));
   }

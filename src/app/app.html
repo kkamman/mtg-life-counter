@@ -6,12 +6,16 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <app-settings />
+    <app-settings class="mr-6" />
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="h-full flex">
       <div
-        class="flex absolute w-full h-full top-0 left-0 items-center justify-center z-50 pointer-events-none"
+        class="flex absolute w-full h-full top-0 right-0 z-50 pointer-events-none"
+        [ngClass]="{
+          'items-center justify-center': !isSinglePlayer(),
+          'justify-end right-1 pt-3 pr-2': isSinglePlayer(),
+        }"
       >
         <button matIconButton (click)="sidenav.open()" class="pointer-events-auto">
           <mat-icon>settings</mat-icon>

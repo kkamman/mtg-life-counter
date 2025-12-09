@@ -1,0 +1,75 @@
+app-player-card:nth-of-type(1) {
+  grid-area: player1;
+
+  .layout-two-players.layout-flipped &,
+  .layout-three-players.layout-flipped &,
+  .layout-four-players.layout-flipped &,
+  .layout-five-players.layout-flipped &,
+  .layout-six-players.layout-flipped & {
+    rotate: 180deg;
+  }
+}
+
+app-player-card:nth-of-type(2) {
+  grid-area: player2;
+  .layout-three-players.layout-flipped &,
+  .layout-four-players.layout-flipped &,
+  .layout-five-players.layout-flipped &,
+  .layout-six-players.layout-flipped & {
+    rotate: 180deg;
+  }
+}
+
+app-player-card:nth-of-type(3) {
+  grid-area: player3;
+  .layout-five-players.layout-flipped &,
+  .layout-six-players.layout-flipped & {
+    rotate: 180deg;
+  }
+}
+
+app-player-card:nth-of-type(4) {
+  grid-area: player4;
+}
+
+app-player-card:nth-of-type(5) {
+  grid-area: player5;
+}
+
+app-player-card:nth-of-type(6) {
+  grid-area: player6;
+}
+
+.layout-single-player {
+  grid-template: 'player1';
+}
+
+.layout-two-players {
+  grid-template:
+    'player1' minmax(0, 1fr)
+    'player2' minmax(0, 1fr);
+}
+
+.layout-three-players {
+  grid-template:
+    'player1 player2' minmax(0, 1fr)
+    'player3 player3' minmax(0, 1fr);
+}
+
+.layout-four-players {
+  grid-template:
+    'player1 player2' minmax(0, 1fr)
+    'player3 player4' minmax(0, 1fr);
+}
+
+.layout-five-players {
+  grid-template:
+    'player1 player1 player2 player2 player3 player3' minmax(0, 1fr)
+    'player4 player4 player4 player5 player5 player5' minmax(0, 1fr);
+}
+
+.layout-six-players {
+  grid-template:
+    'player1 player2 player3' minmax(0, 1fr)
+    'player4 player5 player6' minmax(0, 1fr);
+}

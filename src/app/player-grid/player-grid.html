@@ -1,16 +1,16 @@
-<div class="grid h-full grid-cols-2">
-  <app-player-card
-    class="overflow-hidden p-3 [&>mat-card]:bg-sky-400! dark:[&>mat-card]:bg-sky-700!"
-    [class.rotate-180]="layout().isFlipped"
-  />
-  <app-player-card
-    class="overflow-hidden p-3 [&>mat-card]:bg-green-400! dark:[&>mat-card]:bg-green-700!"
-    [class.rotate-180]="layout().isFlipped"
-  />
-  <app-player-card
-    class="overflow-hidden p-3 [&>mat-card]:bg-rose-400! dark:[&>mat-card]:bg-rose-700!"
-  />
-  <app-player-card
-    class="overflow-hidden p-3 [&>mat-card]:bg-violet-400! dark:[&>mat-card]:bg-violet-700!"
-  />
+<div
+  class="grid h-full"
+  [ngClass]="{
+    'layout-flipped': layout().isFlipped,
+    'layout-single-player': players().length === 1,
+    'layout-two-players': players().length === 2,
+    'layout-three-players': players().length === 3,
+    'layout-four-players': players().length === 4,
+    'layout-five-players': players().length === 5,
+    'layout-six-players': players().length === 6
+  }"
+>
+  @for (player of players(); track $index) {
+  <app-player-card class="overflow-hidden p-1" [ngClass]="player.colorClass" />
+  }
 </div>

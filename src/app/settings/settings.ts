@@ -2,18 +2,13 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { disabled, Field, form } from '@angular/forms/signals';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatSlider, MatSliderThumb } from '@angular/material/slider';
 import { LayoutStore } from '../core/layout-store';
 import { ThemeStore } from '../core/theme-store';
 
-interface SettingsData {
-  theme: 'system' | 'light' | 'dark';
-  isFullscreen: boolean;
-  isFlippedLayout: boolean;
-}
-
 @Component({
   selector: 'app-settings',
-  imports: [MatRadioGroup, MatRadioButton, Field, MatSlideToggle],
+  imports: [MatRadioGroup, MatRadioButton, Field, MatSlideToggle, MatSlider, MatSliderThumb],
   templateUrl: './settings.html',
   host: {
     class: 'flex flex-col p-4 gap-4',
@@ -23,17 +18,19 @@ export class Settings {
   private readonly themeStore = inject(ThemeStore);
   private readonly layoutStore = inject(LayoutStore);
 
-  private readonly settingsModel = signal<SettingsData>({
-    theme: this.themeStore.theme(),
-    isFullscreen: document.fullscreenElement !== null,
-    isFlippedLayout: this.layoutStore.layout().isFlipped,
-  });
-
-  protected readonly settingsForm = form(this.settingsModel, (settings) => {
-    if (!document.fullscreenEnabled) {
-      disabled(settings.isFullscreen);
+  protected readonly settingsForm = form(
+    signal({
+      theme: this.themeStore.theme(),
+      isFullscreen: document.fullscreenElement !== null,
+      isFlippedLayout: this.layoutStore.layout().isFlipped,
+      playerCount: this.layoutStore.layout().playerCount.toString(),
+    }),
+    (settings) => {
+      if (!document.fullscreenEnabled) {
+        disabled(settings.isFullscreen);
+      }
     }
-  });
+  );
 
   constructor() {
     effect(() => this.themeStore.theme.set(this.settingsForm.theme().value()));
@@ -41,6 +38,7 @@ export class Settings {
       this.layoutStore.layout.update((layout) => ({
         ...layout,
         isFlipped: this.settingsForm.isFlippedLayout().value(),
+        playerCount: parseInt(this.settingsForm.playerCount().value()),
       }));
     });
     this.updateIsFullscreenOnChange();
