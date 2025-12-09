@@ -9,7 +9,7 @@ import { PlayerCard } from '../player-card/player-card';
   templateUrl: './player-grid.html',
   styleUrl: './player-grid.css',
   host: {
-    class: 'flex justify-center items-center p-1',
+    class: 'flex justify-center items-center p-1 max-w-svw',
   },
 })
 export class PlayerGrid {
