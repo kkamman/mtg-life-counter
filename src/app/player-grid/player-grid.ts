@@ -15,7 +15,7 @@ import { PlayerCard } from '../player-card/player-card';
 export class PlayerGrid {
   private readonly layoutStore = inject(LayoutStore);
 
-  protected readonly layout = this.layoutStore.layout.asReadonly();
+  protected readonly layout = this.layoutStore.layout;
 
   private readonly playerColorClasses = [
     '[&>mat-card]:bg-sky-400! dark:[&>mat-card]:bg-sky-700!',

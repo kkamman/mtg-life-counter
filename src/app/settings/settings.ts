@@ -35,11 +35,10 @@ export class Settings {
   constructor() {
     effect(() => this.themeStore.theme.set(this.settingsForm.theme().value()));
     effect(() => {
-      this.layoutStore.layout.update((layout) => ({
-        ...layout,
+      this.layoutStore.patchLayout({
         isFlipped: this.settingsForm.isFlippedLayout().value(),
         playerCount: parseInt(this.settingsForm.playerCount().value()),
-      }));
+      });
     });
     this.updateIsFullscreenOnChange();
   }
