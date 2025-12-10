@@ -1,6 +1,6 @@
 {
-  "name": "mtg-life-counter",
-  "short_name": "mtg-life-counter",
+  "name": "MTG Life Counter",
+  "short_name": "MTG Life Counter",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
