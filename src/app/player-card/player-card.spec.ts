@@ -8,12 +8,14 @@ describe('PlayerCard', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlayerCard]
-    })
-    .compileComponents();
+      imports: [PlayerCard],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PlayerCard);
     component = fixture.componentInstance;
+
+    fixture.componentRef.setInput('playerIndex', 0);
+
     await fixture.whenStable();
   });
 
