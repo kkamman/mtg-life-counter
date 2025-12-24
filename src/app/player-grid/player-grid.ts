@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
-import { LayoutStore } from '../core/layout-store';
+import { LayoutStore } from '../data-access/layout-store';
 import { PlayerCard } from '../player-card/player-card';
 
 @Component({

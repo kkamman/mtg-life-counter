@@ -1,14 +1,24 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { disabled, Field, form } from '@angular/forms/signals';
+import { MatButton } from '@angular/material/button';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatSlider, MatSliderThumb } from '@angular/material/slider';
-import { LayoutStore } from '../core/layout-store';
-import { ThemeStore } from '../core/theme-store';
+import { GameStore } from '../data-access/game-store';
+import { LayoutStore } from '../data-access/layout-store';
+import { ThemeStore } from '../data-access/theme-store';
 
 @Component({
   selector: 'app-settings',
-  imports: [MatRadioGroup, MatRadioButton, Field, MatSlideToggle, MatSlider, MatSliderThumb],
+  imports: [
+    MatRadioGroup,
+    MatRadioButton,
+    Field,
+    MatSlideToggle,
+    MatSlider,
+    MatSliderThumb,
+    MatButton,
+  ],
   templateUrl: './settings.html',
   host: {
     class: 'flex flex-col p-4 gap-4',
@@ -17,6 +27,7 @@ import { ThemeStore } from '../core/theme-store';
 export class Settings {
   private readonly themeStore = inject(ThemeStore);
   private readonly layoutStore = inject(LayoutStore);
+  private readonly gameStore = inject(GameStore);
 
   protected readonly settingsForm = form(
     signal({
@@ -33,7 +44,7 @@ export class Settings {
   );
 
   constructor() {
-    effect(() => this.themeStore.theme.set(this.settingsForm.theme().value()));
+    effect(() => this.themeStore.setTheme(this.settingsForm.theme().value()));
     effect(() => {
       this.layoutStore.patchLayout({
         isFlipped: this.settingsForm.isFlippedLayout().value(),
@@ -49,6 +60,10 @@ export class Settings {
     if (isFullscreenRequested !== this.isFullscreenOpen()) {
       isFullscreenRequested ? document.body.requestFullscreen() : document.exitFullscreen();
     }
+  }
+
+  protected resetGame() {
+    this.gameStore.reset();
   }
 
   private updateIsFullscreenOnChange() {

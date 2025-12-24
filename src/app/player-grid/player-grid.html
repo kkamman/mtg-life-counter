@@ -11,6 +11,10 @@
   }"
 >
   @for (player of players(); track $index) {
-  <app-player-card class="overflow-hidden p-1" [ngClass]="player.colorClass" />
+  <app-player-card
+    class="overflow-hidden p-1"
+    [ngClass]="player.colorClass"
+    [playerIndex]="$index"
+  />
   }
 </div>
