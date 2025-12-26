@@ -18,12 +18,12 @@ export class PlayerGrid {
   protected readonly layout = this.layoutStore.layout;
 
   private readonly playerColorClasses = [
-    '[&>mat-card]:bg-sky-400! dark:[&>mat-card]:bg-sky-700!',
-    '[&>mat-card]:bg-green-400! dark:[&>mat-card]:bg-green-700!',
-    '[&>mat-card]:bg-rose-400! dark:[&>mat-card]:bg-rose-700!',
-    '[&>mat-card]:bg-violet-400! dark:[&>mat-card]:bg-violet-700!',
-    '[&>mat-card]:bg-teal-400! dark:[&>mat-card]:bg-teal-700!',
-    '[&>mat-card]:bg-yellow-400! dark:[&>mat-card]:bg-yellow-700!',
+    '[&>mat-card]:bg-sky-700!',
+    '[&>mat-card]:bg-green-700!',
+    '[&>mat-card]:bg-rose-700!',
+    '[&>mat-card]:bg-violet-700!',
+    '[&>mat-card]:bg-teal-700!',
+    '[&>mat-card]:bg-yellow-700!',
   ] as const;
 
   protected readonly players = computed(() =>

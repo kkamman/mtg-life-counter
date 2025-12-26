@@ -9,7 +9,7 @@
         [disabled]="player().life <= minLife"
       >
         <mat-icon
-          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)] text-border-sm-gray-200 dark:text-border-sm-gray-800"
+          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)] text-border-sm-gray-800"
           >remove</mat-icon
         >
       </button>
@@ -17,17 +17,17 @@
 
     <div class="flex flex-col items-center justify-center grow basis-0 relative">
       <div
-        class="landscape:sm:text-lg landscape:md:text-3xl portrait:[@media(min-height:40rem)]:text-lg portrait:[@media(min-height:48rem)]:text-3xl text-border-md-gray-200 dark:text-border-md-gray-800 absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center"
+        class="landscape:sm:text-lg landscape:md:text-3xl portrait:[@media(min-height:40rem)]:text-lg portrait:[@media(min-height:48rem)]:text-3xl text-border-md-gray-800 absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center"
         [class.invisible]="lifeChange() === 0"
       >
         <div
-          class="bg-white/60 dark:bg-black/60 rounded-2xl flex justify-center p-1 landscape:sm:min-w-14 portrait:[@media(min-height:40rem)]:min-w-14"
+          class="bg-black/60 rounded-2xl flex justify-center p-1 landscape:sm:min-w-14 portrait:[@media(min-height:40rem)]:min-w-14"
         >
           {{ lifeChange() }}
         </div>
       </div>
       <span
-        class="text-4xl landscape:sm:text-6xl landscape:md:text-9xl portrait:[@media(min-height:40rem)]:text-6xl portrait:[@media(min-height:48rem)]:text-9xl text-border-lg-gray-200 dark:text-border-lg-gray-800"
+        class="text-4xl landscape:sm:text-6xl landscape:md:text-9xl portrait:[@media(min-height:40rem)]:text-6xl portrait:[@media(min-height:48rem)]:text-9xl text-border-lg-gray-800"
         >{{ player().life }}</span
       >
     </div>
@@ -41,7 +41,7 @@
         [disabled]="player().life >= maxLife"
       >
         <mat-icon
-          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)] text-border-sm-gray-200 dark:text-border-sm-gray-800"
+          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)] text-border-sm-gray-800"
           >add</mat-icon
         >
       </button>
