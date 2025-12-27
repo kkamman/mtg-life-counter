@@ -7,6 +7,7 @@ import { MatSlider, MatSliderThumb } from '@angular/material/slider';
 import { GameStore } from '../data-access/game-store';
 import { LayoutStore } from '../data-access/layout-store';
 import { ThemeStore } from '../data-access/theme-store';
+import { FullscreenToggler } from '../fullscreen-toggler';
 
 @Component({
   selector: 'app-settings',
@@ -28,6 +29,7 @@ export class Settings {
   private readonly themeStore = inject(ThemeStore);
   private readonly layoutStore = inject(LayoutStore);
   private readonly gameStore = inject(GameStore);
+  private readonly fullscreenToggler = inject(FullscreenToggler);
 
   protected readonly settingsForm = form(
     signal({
@@ -37,43 +39,33 @@ export class Settings {
       playerCount: this.layoutStore.layout().playerCount.toString(),
     }),
     (settings) => {
-      if (!document.fullscreenEnabled) {
-        disabled(settings.isFullscreen);
-      }
+      disabled(
+        settings.isFullscreen,
+        () => !document.fullscreenEnabled || !this.fullscreenToggler.canFullscreenBeToggled(),
+      );
     },
   );
 
   constructor() {
     effect(() => this.themeStore.setTheme(this.settingsForm.theme().value()));
+
     effect(() => {
       this.layoutStore.patchLayout({
         isFlipped: this.settingsForm.isFlippedLayout().value(),
         playerCount: parseInt(this.settingsForm.playerCount().value()),
       });
     });
-    this.updateIsFullscreenOnChange();
+
+    effect(() =>
+      this.settingsForm.isFullscreen().value.set(this.fullscreenToggler.isFullscreenOpen()),
+    );
   }
 
   protected toggleFullscreen() {
-    const isFullscreenRequested = this.settingsForm.isFullscreen().value();
-
-    if (isFullscreenRequested !== this.isFullscreenOpen()) {
-      isFullscreenRequested ? document.body.requestFullscreen() : document.exitFullscreen();
-    }
+    this.fullscreenToggler.toggleFullscreen();
   }
 
   protected resetGame() {
     this.gameStore.reset();
-  }
-
-  private updateIsFullscreenOnChange() {
-    const updateFn = () => this.settingsForm.isFullscreen().value.set(this.isFullscreenOpen());
-
-    document.body.addEventListener('fullscreenchange', updateFn);
-    document.body.addEventListener('fullscreenerror', updateFn);
-  }
-
-  private isFullscreenOpen() {
-    return document.fullscreenElement !== null;
   }
 }
