@@ -1,26 +1,67 @@
 @import 'tailwindcss';
 
+@theme {
+  --container-7xs: 8rem;
+  --container-6xs: 10rem;
+  --container-5xs: 12rem;
+  --container-4xs: 14rem;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @utility text-border-lg-* {
-  text-shadow: -2px -2px 0 --value(--color- *), 2px -2px 0 --value(--color- *),
-    -2px 2px 0 --value(--color- *), 2px 2px 0 --value(--color- *), -3px 0px 0 --value(--color- *),
-    3px 0px 0 --value(--color- *), 0px -3px 0 --value(--color- *), 0px 3px 0 --value(--color- *);
+  text-shadow:
+    -2px -2px 0 --value(--color-*),
+    2px -2px 0 --value(--color-*),
+    -2px 2px 0 --value(--color-*),
+    2px 2px 0 --value(--color-*),
+    -3px 0px 0 --value(--color-*),
+    3px 0px 0 --value(--color-*),
+    0px -3px 0 --value(--color-*),
+    0px 3px 0 --value(--color-*);
 }
 
 @utility text-border-md-* {
-  text-shadow: -1px -1px 0 --value(--color- *), 1px -1px 0 --value(--color- *),
-    -1px 1px 0 --value(--color- *), 1px 1px 0 --value(--color- *), -1.5px 0px 0 --value(--color- *),
-    1.5px 0px 0 --value(--color- *), 0px -1.5px 0 --value(--color- *),
-    0px 1.5px 0 --value(--color- *);
+  text-shadow:
+    -1px -1px 0 --value(--color-*),
+    1px -1px 0 --value(--color-*),
+    -1px 1px 0 --value(--color-*),
+    1px 1px 0 --value(--color-*),
+    -1.5px 0px 0 --value(--color-*),
+    1.5px 0px 0 --value(--color-*),
+    0px -1.5px 0 --value(--color-*),
+    0px 1.5px 0 --value(--color-*);
 }
 
 @utility text-border-sm-* {
-  text-shadow: -0.5px -0.5px 0 --value(--color- *), 0.5px -0.5px 0 --value(--color- *),
-    -0.5px 0.5px 0 --value(--color- *), 0.5px 0.5px 0 --value(--color- *),
-    -0.75px 0px 0 --value(--color- *), 0.75px 0px 0 --value(--color- *),
-    0px -0.75px 0 --value(--color- *), 0px 0.75px 0 --value(--color- *);
+  text-shadow:
+    -0.5px -0.5px 0 --value(--color-*),
+    0.5px -0.5px 0 --value(--color-*),
+    -0.5px 0.5px 0 --value(--color-*),
+    0.5px 0.5px 0 --value(--color-*),
+    -0.75px 0px 0 --value(--color-*),
+    0.75px 0px 0 --value(--color-*),
+    0px -0.75px 0 --value(--color-*),
+    0px 0.75px 0 --value(--color-*);
 }
+
+@custom-variant @7xs-h (@container (height >= 8rem));
+@custom-variant @6xs-h (@container (height >= 10rem));
+@custom-variant @5xs-h (@container (height >= 12rem));
+@custom-variant @4xs-h (@container (height >= 14rem));
+@custom-variant @3xs-h (@container (height >= 16rem));
+@custom-variant @2xs-h (@container (height >= 18rem));
+@custom-variant @xs-h (@container (height >= 20rem));
+@custom-variant @sm-h (@container (height >= 24rem));
+@custom-variant @md-h (@container (height >= 28rem));
+@custom-variant @lg-h (@container (height >= 32rem));
+@custom-variant @xl-h (@container (height >= 36rem));
+@custom-variant @2xl-h (@container (height >= 42rem));
+@custom-variant @3xl-h (@container (height >= 48rem));
+@custom-variant @4xl-h (@container (height >= 56rem));
+@custom-variant @5xl-h (@container (height >= 64rem));
+@custom-variant @6xl-h (@container (height >= 72rem));
+@custom-variant @7xl-h (@container (height >= 80rem));
 
 html,
 body {

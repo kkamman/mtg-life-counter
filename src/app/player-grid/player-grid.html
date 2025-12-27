@@ -7,14 +7,14 @@
     'layout-three-players': players().length === 3,
     'layout-four-players': players().length === 4,
     'layout-five-players': players().length === 5,
-    'layout-six-players': players().length === 6
+    'layout-six-players': players().length === 6,
   }"
 >
   @for (player of players(); track $index) {
-  <app-player-card
-    class="overflow-hidden p-1"
-    [ngClass]="player.colorClass"
-    [playerIndex]="$index"
-  />
+    <app-player-card
+      class="overflow-hidden p-1"
+      [ngClass]="player.colorClass"
+      [playerIndex]="$index"
+    />
   }
 </div>

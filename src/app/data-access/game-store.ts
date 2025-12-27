@@ -3,9 +3,11 @@ import { z } from 'zod';
 import { Layout, LayoutStore } from './layout-store';
 import { syncSignalWithLocalStorage } from './local-storage';
 
+const CommanderDamage = z.array(z.number().min(0).max(999).default(0)).min(1).max(2).default([0]);
+
 const GamePlayer = z.object({
-  playerId: z.guid().optional(),
   life: z.number().min(0).max(999).default(40),
+  commanderDamage: z.array(CommanderDamage).default([]),
 });
 
 export type GamePlayer = z.infer<typeof GamePlayer>;
@@ -35,15 +37,37 @@ export class GameStore {
         newGameState.players = [
           ...newGameState.players,
           ...Array.from({ length: newLayout.playerCount - newGameState.players.length }, () =>
-            GamePlayer.parse({})
+            GamePlayer.parse({}),
           ),
         ];
       }
 
+      newGameState.players
+        .filter((player) => player.commanderDamage.length < newLayout.playerCount)
+        .forEach((player) => {
+          player.commanderDamage = [
+            ...player.commanderDamage,
+            ...Array.from({ length: newLayout.playerCount - player.commanderDamage.length }, () =>
+              CommanderDamage.parse(undefined),
+            ),
+          ];
+        });
+
       return newGameState;
     },
   });
-  public readonly game = this._game.asReadonly();
+
+  public readonly game = computed(() => {
+    const game = { ...this._game() };
+    const playerCount = this.layoutStore.layout().playerCount;
+
+    game.players = game.players.slice(0, playerCount).map((player) => ({
+      ...player,
+      commanderDamage: player.commanderDamage.slice(0, playerCount),
+    }));
+
+    return game;
+  });
 
   constructor() {
     syncSignalWithLocalStorage({
@@ -57,11 +81,11 @@ export class GameStore {
     return computed(() => this.game().players[playerIndex]);
   }
 
-  public patchPlayer(playerIndex: number, patch: GamePlayer) {
+  public patchPlayer(playerIndex: number, patch: Partial<GamePlayer>) {
     this._game.update((game) => ({
       ...game,
       players: game.players.map((player, index) =>
-        index === playerIndex ? GamePlayer.parse({ ...player, ...patch }) : player
+        index === playerIndex ? GamePlayer.parse({ ...player, ...patch }) : player,
       ),
     }));
   }
@@ -72,7 +96,12 @@ export class GameStore {
 
   private getInitialGameState(playerCount: number) {
     return Game.parse({
-      players: Array.from({ length: playerCount }, () => GamePlayer.parse({})),
+      players: Array.from({ length: playerCount }, () => GamePlayer.parse({})).map((player) => ({
+        ...player,
+        commanderDamage: Array.from({ length: playerCount }, () =>
+          CommanderDamage.parse(undefined),
+        ),
+      })),
     });
   }
 }

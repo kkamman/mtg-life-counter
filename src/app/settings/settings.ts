@@ -40,7 +40,7 @@ export class Settings {
       if (!document.fullscreenEnabled) {
         disabled(settings.isFullscreen);
       }
-    }
+    },
   );
 
   constructor() {

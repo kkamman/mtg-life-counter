@@ -29,6 +29,6 @@ export class PlayerGrid {
   protected readonly players = computed(() =>
     Array.from({ length: this.layout().playerCount }, (_, index) => ({
       colorClass: this.playerColorClasses[index],
-    }))
+    })),
   );
 }

@@ -8,9 +8,8 @@ describe('PlayerGrid', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlayerGrid]
-    })
-    .compileComponents();
+      imports: [PlayerGrid],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PlayerGrid);
     component = fixture.componentInstance;

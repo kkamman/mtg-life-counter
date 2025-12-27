@@ -1,5 +1,15 @@
-<mat-card class="h-full">
-  <div class="h-full flex flex-row portrait:flex-col-reverse items-center justify-center p-8 gap-4">
+<mat-card class="@container h-full">
+  @if (layout().playerCount > 1) {
+    <div
+      class="p-1 @md:p-4 bg-gray-800/60 flex justify-between rounded-t-xl items-center gap-1 @md:gap-4 text-border-md-gray-800"
+    >
+      <mat-icon class="shrink-0 @max-md:scale-70">counter_{{ playerIndex() + 1 }}</mat-icon>
+      <span class="@md:text-xl text-nowrap">Player {{ playerIndex() + 1 }}</span>
+    </div>
+  }
+  <div
+    class="@container-[size] h-full flex flex-row portrait:flex-col-reverse items-center justify-center p-8 gap-4 grow basis-0"
+  >
     <div class="grow aspect-square">
       <button
         class="w-full! h-full!"
@@ -9,7 +19,7 @@
         [disabled]="player().life <= minLife"
       >
         <mat-icon
-          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)] text-border-sm-gray-800"
+          class="@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800"
           >remove</mat-icon
         >
       </button>
@@ -17,19 +27,14 @@
 
     <div class="flex flex-col items-center justify-center grow basis-0 relative">
       <div
-        class="landscape:sm:text-lg landscape:md:text-3xl portrait:[@media(min-height:40rem)]:text-lg portrait:[@media(min-height:48rem)]:text-3xl text-border-md-gray-800 absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center"
+        class="@sm:@sm-h:text-lg @md:@md-h:text-3xl text-border-md-gray-800 absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center"
         [class.invisible]="lifeChange() === 0"
       >
-        <div
-          class="bg-black/60 rounded-2xl flex justify-center p-1 landscape:sm:min-w-14 portrait:[@media(min-height:40rem)]:min-w-14"
-        >
+        <div class="bg-black/60 rounded-2xl flex justify-center p-1 @sm:@sm-h:min-w-14">
           {{ lifeChange() }}
         </div>
       </div>
-      <span
-        class="text-4xl landscape:sm:text-6xl landscape:md:text-9xl portrait:[@media(min-height:40rem)]:text-6xl portrait:[@media(min-height:48rem)]:text-9xl text-border-lg-gray-800"
-        >{{ player().life }}</span
-      >
+      <span class="text-border-lg-gray-800 @7xs-h:@7xs:text-6xl">{{ player().life }}</span>
     </div>
 
     <div class="grow aspect-square">
@@ -38,13 +43,56 @@
         matIconButton
         aria-label="Add 1 life"
         (click)="addLife()"
-        [disabled]="player().life >= maxLife"
+        [disabled]="
+          player().life >= maxLife ||
+          (commanderDamageSource() != null &&
+            getCommanderDamageForSource(commanderDamageSource()!)) === 0
+        "
       >
         <mat-icon
-          class="landscape:sm:transform-[scale(2)] landscape:md:transform-[scale(3)] portrait:[@media(min-height:40rem)]:transform-[scale(2)] portrait:[@media(min-height:48rem)]:transform-[scale(3)] text-border-sm-gray-800"
+          class="@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800"
           >add</mat-icon
         >
       </button>
     </div>
   </div>
+  @if (layout().playerCount > 1) {
+    <div
+      class="flex flex-wrap items-center justify-center bg-gray-800/60 rounded-b-xl p-1 @xmd:p-4 overflow-y-scroll overflow-x-hidden"
+    >
+      @for (commanderDamage of player().commanderDamage; track $index; let playerIndex = $index) {
+        <div class="flex items-center">
+          @for (damageCount of commanderDamage; track $index; let commanderIndex = $index) {
+            @let isSelected =
+              isCommanderDamageSourceEqual(commanderDamageSource(), {
+                playerIndex,
+                commanderIndex,
+              });
+            @if (damageCount > 0) {
+              <button
+                matButton
+                class="text-white! text-border-sm-gray-800 min-w-20!"
+                [class.opacity-100]="isSelected"
+                [class.bg-black!]="isSelected"
+                (click)="toggleCommanderDamageSource({ playerIndex, commanderIndex })"
+              >
+                <mat-icon>counter_{{ playerIndex + 1 }}</mat-icon>
+                {{ damageCount }}
+              </button>
+            } @else {
+              <button
+                matIconButton
+                class="text-white! opacity-60 min-w-20"
+                [class.opacity-100]="isSelected"
+                [class.bg-black!]="isSelected"
+                (click)="toggleCommanderDamageSource({ playerIndex, commanderIndex })"
+              >
+                <mat-icon class="scale-70">counter_{{ playerIndex + 1 }}</mat-icon>
+              </button>
+            }
+          }
+        </div>
+      }
+    </div>
+  }
 </mat-card>

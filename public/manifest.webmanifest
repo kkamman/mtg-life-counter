@@ -2,6 +2,7 @@
   "name": "MTG Life Counter",
   "short_name": "MTG Life Counter",
   "display": "standalone",
+  "orientation": "landscape",
   "scope": "./",
   "start_url": "./",
   "icons": [
