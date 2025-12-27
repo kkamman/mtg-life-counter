@@ -37,7 +37,9 @@ export class FullscreenToggler {
 
   public readonly isFullscreenOpen = computed(() => this.fullscreenSource() != null);
 
-  public readonly canFullscreenBeToggled = computed(() => this.fullscreenSource() !== 'browser');
+  public readonly canFullscreenBeToggled = computed(
+    () => this.fullscreenSource() !== 'browser' && document.fullscreenEnabled,
+  );
 
   public toggleFullscreen() {
     if (!this.canFullscreenBeToggled()) {

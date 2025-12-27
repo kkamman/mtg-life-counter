@@ -39,10 +39,7 @@ export class Settings {
       playerCount: this.layoutStore.layout().playerCount.toString(),
     }),
     (settings) => {
-      disabled(
-        settings.isFullscreen,
-        () => !document.fullscreenEnabled || !this.fullscreenToggler.canFullscreenBeToggled(),
-      );
+      disabled(settings.isFullscreen, () => !this.fullscreenToggler.canFullscreenBeToggled());
     },
   );
 
