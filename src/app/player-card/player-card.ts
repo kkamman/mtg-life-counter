@@ -2,6 +2,7 @@ import { Component, computed, inject, input, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
+import { MatRipple } from '@angular/material/core';
 import { MatIcon } from '@angular/material/icon';
 import {
   concat,
@@ -25,7 +26,7 @@ interface CommanderDamageSource {
 
 @Component({
   selector: 'app-player-card',
-  imports: [MatCard, MatIconButton, MatIcon, MatButton],
+  imports: [MatCard, MatIconButton, MatIcon, MatButton, MatRipple],
   templateUrl: './player-card.html',
   host: {
     class: 'block',

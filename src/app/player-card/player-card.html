@@ -1,64 +1,74 @@
 <mat-card class="@container h-full">
   @if (layout().playerCount > 1) {
     <div
-      class="p-1 @md:p-4 bg-gray-800/60 flex justify-between rounded-t-xl items-center gap-1 @md:gap-4 text-border-md-gray-800"
+      class="p-1 @md:p-4 bg-gray-800/60 flex justify-between rounded-t-xl items-center gap-1 @md:gap-4 text-border-md-gray-800 shrink"
     >
       <mat-icon class="shrink-0 @max-md:scale-70">counter_{{ playerIndex() + 1 }}</mat-icon>
       <span class="@md:text-xl text-nowrap">Player {{ playerIndex() + 1 }}</span>
     </div>
   }
   <div
-    class="@container-[size] h-full flex flex-row portrait:flex-col-reverse items-center justify-center p-8 gap-4 grow basis-0"
+    class="@container-[size] h-full flex flex-row portrait:flex-col-reverse items-center justify-center grow basis-1/2 shrink-0"
   >
-    <div class="grow aspect-square">
-      <button
-        class="w-full! h-full!"
-        matIconButton
-        aria-label="Remove 1 life"
-        (click)="removeLife()"
-        [disabled]="player().life <= minLife"
+    <button
+      class="flex items-center justify-center basis-1/4 h-full w-full bg-gray-800/10 cursor-pointer shrink-0 disabled:opacity-20 disabled:cursor-not-allowed"
+      aria-label="Remove 1 life"
+      (click)="removeLife()"
+      [disabled]="player().life <= minLife"
+      matRipple
+    >
+      <mat-icon
+        class="@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800"
+        >remove</mat-icon
       >
-        <mat-icon
-          class="@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800"
-          >remove</mat-icon
+    </button>
+
+    <div class="flex items-center justify-center grow basis-0 h-full w-full overflow-hidden">
+      <svg class="w-full h-full" viewBox="0 0 30 15">
+        <text
+          class="fill-white stroke-black stroke-1 [paint-order:stroke]"
+          x="50%"
+          y="50%"
+          dominant-baseline="central"
+          text-anchor="middle"
         >
-      </button>
+          {{ player().life }}
+        </text>
+        @if (lifeChange() !== 0) {
+          <rect x="37.5%" y="37.5%" rx="2" class="fill-black/60 w-1/4 h-1/4" />
+          <text
+            class="fill-white stroke-black stroke-[0.5] [paint-order:stroke] text-[0.2rem]"
+            x="50%"
+            y="50%"
+            dominant-baseline="central"
+            text-anchor="middle"
+          >
+            {{ lifeChange() }}
+          </text>
+        }
+      </svg>
     </div>
 
-    <div class="flex flex-col items-center justify-center grow basis-0 relative">
-      <div
-        class="@sm:@sm-h:text-lg @md:@md-h:text-3xl text-border-md-gray-800 absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center"
-        [class.invisible]="lifeChange() === 0"
+    <button
+      class="flex items-center justify-center basis-1/4 h-full w-full bg-gray-800/10 cursor-pointer shrink-0 disabled:opacity-20 disabled:cursor-not-allowed"
+      aria-label="Add 1 life"
+      (click)="addLife()"
+      [disabled]="
+        player().life >= maxLife ||
+        (commanderDamageSource() != null &&
+          getCommanderDamageForSource(commanderDamageSource()!)) === 0
+      "
+      matRipple
+    >
+      <mat-icon
+        class="@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800"
+        >add</mat-icon
       >
-        <div class="bg-black/60 rounded-2xl flex justify-center p-1 @sm:@sm-h:min-w-14">
-          {{ lifeChange() }}
-        </div>
-      </div>
-      <span class="text-border-lg-gray-800 @7xs-h:@7xs:text-6xl">{{ player().life }}</span>
-    </div>
-
-    <div class="grow aspect-square">
-      <button
-        class="w-full! h-full!"
-        matIconButton
-        aria-label="Add 1 life"
-        (click)="addLife()"
-        [disabled]="
-          player().life >= maxLife ||
-          (commanderDamageSource() != null &&
-            getCommanderDamageForSource(commanderDamageSource()!)) === 0
-        "
-      >
-        <mat-icon
-          class="@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800"
-          >add</mat-icon
-        >
-      </button>
-    </div>
+    </button>
   </div>
   @if (layout().playerCount > 1) {
     <div
-      class="flex flex-wrap items-center justify-center bg-gray-800/60 rounded-b-xl p-1 @xmd:p-4 overflow-y-scroll overflow-x-hidden"
+      class="flex flex-wrap items-center justify-center bg-gray-800/60 rounded-b-xl p-1 @md:p-4 overflow-y-scroll overflow-x-hidden shrink"
     >
       @for (commanderDamage of player().commanderDamage; track $index; let playerIndex = $index) {
         <div class="flex items-center">
