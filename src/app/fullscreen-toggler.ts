@@ -49,7 +49,7 @@ export class FullscreenToggler {
     if (this.isFullscreenOpen()) {
       document.exitFullscreen();
     } else {
-      document.body.requestFullscreen();
+      document.documentElement.requestFullscreen();
     }
   }
 

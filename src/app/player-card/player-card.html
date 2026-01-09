@@ -1,32 +1,40 @@
 <mat-card class="@container h-full">
-  @if (layout().playerCount > 1) {
-    <div
-      class="text-border-md-gray-800 flex shrink items-center justify-between gap-1 rounded-t-xl bg-gray-800/60 p-1 @md:gap-4 @md:p-4"
-    >
-      <mat-icon class="shrink-0 @max-md:scale-70">counter_{{ playerIndex() + 1 }}</mat-icon>
-      <span class="text-nowrap @md:text-xl">Player {{ playerIndex() + 1 }}</span>
-    </div>
-  }
-  <div
-    class="@container-[size] flex h-full shrink-0 grow basis-1/2 flex-row items-center justify-center portrait:flex-col-reverse"
+  <button
+    class="text-border-md-gray-800 flex shrink-0 cursor-pointer items-center justify-between gap-1 rounded-t-xl bg-gray-800/60 p-2"
+    matRipple
+    (click)="openSettingsDialog()"
   >
-    <button
-      class="flex h-full w-full shrink-0 basis-1/4 cursor-pointer items-center justify-center bg-gray-800/10 disabled:cursor-not-allowed disabled:opacity-20"
-      aria-label="Remove 1 life"
-      (click)="removeLife()"
-      [disabled]="player().life <= minLife"
-      matRipple
-    >
-      <mat-icon
-        class="@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800"
-        >remove</mat-icon
+    <mat-icon class="shrink-0 scale-70 @md:scale-100">counter_{{ playerIndex() + 1 }}</mat-icon>
+    <span class="text-nowrap @md:text-xl">Player {{ playerIndex() + 1 }}</span>
+    <mat-icon class="shrink-0 scale-70 @md:scale-100">settings</mat-icon>
+  </button>
+
+  <div
+    class="@container-[size] relative flex h-full shrink-0 grow basis-1/2 flex-row items-center justify-center portrait:flex-col-reverse"
+  >
+    @let removeLifeButtonDisabled = player().life <= minLife;
+
+    @if (!layout().areLifeChangeIconsHidden) {
+      <div
+        class="flex h-full w-full shrink-0 basis-1/4 items-center justify-center"
+        matRipple
+        [matRippleTrigger]="removeLifeBtn"
+        [matRippleCentered]="true"
       >
-    </button>
+        <mat-icon
+          [ngClass]="{
+            '@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800': true,
+            'opacity-20': removeLifeButtonDisabled,
+          }"
+          >remove</mat-icon
+        >
+      </div>
+    }
 
     <div class="flex h-full w-full grow basis-0 items-center justify-center overflow-hidden">
       <svg class="h-full w-full" viewBox="0 0 30 15">
         <text
-          class="fill-white stroke-black stroke-1 [paint-order:stroke]"
+          class="fill-white stroke-black stroke-1 [paint-order:stroke] [stroke-linejoin:round]"
           x="50%"
           y="50%"
           dominant-baseline="central"
@@ -35,9 +43,9 @@
           {{ player().life }}
         </text>
         @if (lifeChange() !== 0) {
-          <rect x="37.5%" y="37.5%" rx="2" class="h-1/4 w-1/4 fill-black/60" />
+          <rect x="37.5%" y="37.5%" rx="2" class="h-1/4 w-1/4 fill-black/70" />
           <text
-            class="fill-white stroke-black stroke-[0.5] text-[0.2rem] [paint-order:stroke]"
+            class="fill-white stroke-black stroke-[0.5] text-[0.2rem] [paint-order:stroke] [stroke-linejoin:round]"
             x="50%"
             y="50%"
             dominant-baseline="central"
@@ -49,26 +57,49 @@
       </svg>
     </div>
 
-    <button
-      class="flex h-full w-full shrink-0 basis-1/4 cursor-pointer items-center justify-center bg-gray-800/10 disabled:cursor-not-allowed disabled:opacity-20"
-      aria-label="Add 1 life"
-      (click)="addLife()"
-      [disabled]="
-        player().life >= maxLife ||
-        (commanderDamageSource() != null &&
-          getCommanderDamageForSource(commanderDamageSource()!)) === 0
-      "
-      matRipple
-    >
-      <mat-icon
-        class="@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800"
-        >add</mat-icon
+    @let addLifeButtonDisabled =
+      player().life >= maxLife ||
+      (commanderDamageSource() != null && getCommanderDamageForSource(commanderDamageSource()!)) ===
+        0;
+
+    @if (!layout().areLifeChangeIconsHidden) {
+      <div
+        class="flex h-full w-full shrink-0 basis-1/4 items-center justify-center"
+        matRipple
+        [matRippleTrigger]="addLifeBtn"
+        [matRippleCentered]="true"
       >
-    </button>
+        <mat-icon
+          [ngClass]="{
+            '@sm:@sm-h:transform-[scale(2)] @md:@md-h:transform-[scale(3)] text-border-sm-gray-800': true,
+            'opacity-20': addLifeButtonDisabled,
+          }"
+          >add</mat-icon
+        >
+      </div>
+    }
+
+    <div class="absolute top-0 right-0 flex h-full w-full flex-row portrait:flex-col-reverse">
+      <button
+        #removeLifeBtn
+        class="grow cursor-pointer disabled:cursor-not-allowed"
+        aria-label="Remove 1 life"
+        (click)="removeLife()"
+        [disabled]="removeLifeButtonDisabled"
+      ></button>
+      <button
+        #addLifeBtn
+        class="grow cursor-pointer disabled:cursor-not-allowed"
+        aria-label="Add 1 life"
+        (click)="addLife()"
+        [disabled]="addLifeButtonDisabled"
+      ></button>
+    </div>
   </div>
-  @if (layout().playerCount > 1) {
+
+  @if (!layout().isCommanderDamageHidden) {
     <div
-      class="flex shrink flex-wrap items-center justify-center overflow-x-hidden overflow-y-scroll rounded-b-xl bg-gray-800/60 p-1 @md:p-4"
+      class="flex shrink flex-wrap items-center justify-center overflow-x-hidden overflow-y-scroll rounded-b-xl bg-gray-800/60 p-1"
     >
       @for (commanderDamage of player().commanderDamage; track $index; let playerIndex = $index) {
         <div class="flex items-center">
@@ -81,9 +112,10 @@
             @if (damageCount > 0) {
               <button
                 matButton
-                class="text-border-sm-gray-800 min-w-20! text-white!"
-                [class.opacity-100]="isSelected"
-                [class.bg-black!]="isSelected"
+                [ngClass]="{
+                  'text-border-sm-gray-800 min-w-20! text-white!': true,
+                  'bg-black/40! opacity-100': isSelected,
+                }"
                 (click)="toggleCommanderDamageSource({ playerIndex, commanderIndex })"
               >
                 <mat-icon>counter_{{ playerIndex + 1 }}</mat-icon>
@@ -92,9 +124,10 @@
             } @else {
               <button
                 matIconButton
-                class="min-w-20 text-white! opacity-60"
-                [class.opacity-100]="isSelected"
-                [class.bg-black!]="isSelected"
+                [ngClass]="{
+                  'min-w-20 text-white! opacity-60': true,
+                  'bg-black/60! opacity-100': isSelected,
+                }"
                 (click)="toggleCommanderDamageSource({ playerIndex, commanderIndex })"
               >
                 <mat-icon class="scale-70">counter_{{ playerIndex + 1 }}</mat-icon>

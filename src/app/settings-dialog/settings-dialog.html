@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Settings</h2>
+<mat-dialog-content>
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-1">
+      <label class="block">Theme</label>
+      <mat-radio-group
+        name="theme"
+        aria-label="Theme"
+        [field]="settingsForm.theme"
+        class="flex flex-wrap gap-x-4"
+      >
+        <mat-radio-button value="system">System</mat-radio-button>
+        <mat-radio-button value="light">Light</mat-radio-button>
+        <mat-radio-button value="dark">Dark</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <mat-slide-toggle
+      name="isFlippedLayout"
+      aria-label="Is flipped layout"
+      [field]="settingsForm.isFlippedLayout"
+      >Flip Layout</mat-slide-toggle
+    >
+
+    <mat-slide-toggle
+      name="areLifeChangeIconsHidden"
+      aria-label="Are -/+ button icons hidden"
+      [field]="settingsForm.areLifeChangeIconsHidden"
+      >Hide -/+ button icons</mat-slide-toggle
+    >
+
+    <mat-slide-toggle
+      name="isCommanderDamageHidden"
+      aria-label="Is commander damage disabled"
+      [field]="settingsForm.isCommanderDamageHidden"
+      >Disable commander damage</mat-slide-toggle
+    >
+
+    <mat-slide-toggle
+      name="isFullscreen"
+      aria-label="Is fullscreen enabled"
+      [field]="settingsForm.isFullscreen"
+      (click)="toggleFullscreen()"
+      >Fullscreen</mat-slide-toggle
+    >
+
+    <div class="flex flex-col gap-1">
+      <div class="flex justify-between">
+        <label class="block">Players</label
+        ><span class="text-lg">{{ settingsForm.playerCount().value() }}</span>
+      </div>
+      <mat-slider min="1" max="6" step="1" [showTickMarks]="true">
+        <input matSliderThumb [field]="settingsForm.playerCount" />
+      </mat-slider>
+    </div>
+
+    <button matButton="filled" (click)="resetGame()">Reset Game</button>
+  </div>
+</mat-dialog-content>

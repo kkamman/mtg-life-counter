@@ -4,6 +4,8 @@ import { syncSignalWithLocalStorage } from './local-storage';
 
 const Layout = z.object({
   isFlipped: z.boolean().default(false),
+  areLifeChangeIconsHidden: z.boolean().default(false),
+  isCommanderDamageHidden: z.boolean().default(false),
   playerCount: z.number().min(1).max(6).default(4),
 });
 

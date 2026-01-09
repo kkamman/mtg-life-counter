@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Settings } from './settings';
+import { SettingsDialog } from './settings-dialog';
 
-describe('Settings', () => {
-  let component: Settings;
-  let fixture: ComponentFixture<Settings>;
+describe('SettingsDialog', () => {
+  let component: SettingsDialog;
+  let fixture: ComponentFixture<SettingsDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Settings],
+      imports: [SettingsDialog],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Settings);
+    fixture = TestBed.createComponent(SettingsDialog);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

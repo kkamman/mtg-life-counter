@@ -1,8 +1,10 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatRipple } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import {
   concat,
@@ -17,7 +19,8 @@ import {
   takeWhile,
 } from 'rxjs';
 import { GameStore } from '../data-access/game-store';
-import { LayoutStore } from '../data-access/layout-store';
+import { Layout, LayoutStore } from '../data-access/layout-store';
+import { SettingsDialog } from '../settings-dialog/settings-dialog';
 
 interface CommanderDamageSource {
   playerIndex: number;
@@ -26,7 +29,7 @@ interface CommanderDamageSource {
 
 @Component({
   selector: 'app-player-card',
-  imports: [MatCard, MatIconButton, MatIcon, MatButton, MatRipple],
+  imports: [MatCard, MatIconButton, MatIcon, MatButton, MatRipple, NgClass],
   templateUrl: './player-card.html',
   host: {
     class: 'block',
@@ -37,6 +40,7 @@ export class PlayerCard {
 
   private readonly gameStore = inject(GameStore);
   private readonly layoutStore = inject(LayoutStore);
+  private readonly dialog = inject(MatDialog);
 
   protected readonly maxLife = 999;
   protected readonly minLife = 0;
@@ -58,7 +62,16 @@ export class PlayerCard {
     ),
   );
 
-  protected readonly commanderDamageSource = signal<CommanderDamageSource | undefined>(undefined);
+  protected readonly commanderDamageSource = linkedSignal<
+    Layout,
+    CommanderDamageSource | undefined
+  >({
+    source: this.layout,
+    computation: (newLayout, previous) =>
+      !previous?.value || previous.value.playerIndex >= newLayout.playerCount
+        ? undefined
+        : previous.value,
+  });
 
   protected removeLife() {
     let playerCommanderDamage = [...this.player().commanderDamage];
@@ -117,5 +130,9 @@ export class PlayerCard {
     b: CommanderDamageSource | undefined,
   ) {
     return a?.playerIndex === b?.playerIndex && a?.commanderIndex === b?.commanderIndex;
+  }
+
+  protected openSettingsDialog() {
+    this.dialog.open(SettingsDialog);
   }
 }

@@ -1,25 +1,11 @@
-import { NgClass } from '@angular/common';
 import { Component, computed, effect, inject, Renderer2 } from '@angular/core';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { LayoutStore } from './data-access/layout-store';
 import { ThemeStore } from './data-access/theme-store';
 import { PlayerGrid } from './player-grid/player-grid';
-import { Settings } from './settings/settings';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    PlayerGrid,
-    MatSidenavContainer,
-    MatSidenav,
-    MatSidenavContent,
-    MatIconButton,
-    MatIcon,
-    Settings,
-    NgClass,
-  ],
+  imports: [PlayerGrid],
   templateUrl: './app.html',
 })
 export class App {
