@@ -1,17 +1,17 @@
 <mat-card class="@container h-full">
   @if (layout().playerCount > 1) {
     <div
-      class="p-1 @md:p-4 bg-gray-800/60 flex justify-between rounded-t-xl items-center gap-1 @md:gap-4 text-border-md-gray-800 shrink"
+      class="text-border-md-gray-800 flex shrink items-center justify-between gap-1 rounded-t-xl bg-gray-800/60 p-1 @md:gap-4 @md:p-4"
     >
       <mat-icon class="shrink-0 @max-md:scale-70">counter_{{ playerIndex() + 1 }}</mat-icon>
-      <span class="@md:text-xl text-nowrap">Player {{ playerIndex() + 1 }}</span>
+      <span class="text-nowrap @md:text-xl">Player {{ playerIndex() + 1 }}</span>
     </div>
   }
   <div
-    class="@container-[size] h-full flex flex-row portrait:flex-col-reverse items-center justify-center grow basis-1/2 shrink-0"
+    class="@container-[size] flex h-full shrink-0 grow basis-1/2 flex-row items-center justify-center portrait:flex-col-reverse"
   >
     <button
-      class="flex items-center justify-center basis-1/4 h-full w-full bg-gray-800/10 cursor-pointer shrink-0 disabled:opacity-20 disabled:cursor-not-allowed"
+      class="flex h-full w-full shrink-0 basis-1/4 cursor-pointer items-center justify-center bg-gray-800/10 disabled:cursor-not-allowed disabled:opacity-20"
       aria-label="Remove 1 life"
       (click)="removeLife()"
       [disabled]="player().life <= minLife"
@@ -23,8 +23,8 @@
       >
     </button>
 
-    <div class="flex items-center justify-center grow basis-0 h-full w-full overflow-hidden">
-      <svg class="w-full h-full" viewBox="0 0 30 15">
+    <div class="flex h-full w-full grow basis-0 items-center justify-center overflow-hidden">
+      <svg class="h-full w-full" viewBox="0 0 30 15">
         <text
           class="fill-white stroke-black stroke-1 [paint-order:stroke]"
           x="50%"
@@ -35,9 +35,9 @@
           {{ player().life }}
         </text>
         @if (lifeChange() !== 0) {
-          <rect x="37.5%" y="37.5%" rx="2" class="fill-black/60 w-1/4 h-1/4" />
+          <rect x="37.5%" y="37.5%" rx="2" class="h-1/4 w-1/4 fill-black/60" />
           <text
-            class="fill-white stroke-black stroke-[0.5] [paint-order:stroke] text-[0.2rem]"
+            class="fill-white stroke-black stroke-[0.5] text-[0.2rem] [paint-order:stroke]"
             x="50%"
             y="50%"
             dominant-baseline="central"
@@ -50,7 +50,7 @@
     </div>
 
     <button
-      class="flex items-center justify-center basis-1/4 h-full w-full bg-gray-800/10 cursor-pointer shrink-0 disabled:opacity-20 disabled:cursor-not-allowed"
+      class="flex h-full w-full shrink-0 basis-1/4 cursor-pointer items-center justify-center bg-gray-800/10 disabled:cursor-not-allowed disabled:opacity-20"
       aria-label="Add 1 life"
       (click)="addLife()"
       [disabled]="
@@ -68,7 +68,7 @@
   </div>
   @if (layout().playerCount > 1) {
     <div
-      class="flex flex-wrap items-center justify-center bg-gray-800/60 rounded-b-xl p-1 @md:p-4 overflow-y-scroll overflow-x-hidden shrink"
+      class="flex shrink flex-wrap items-center justify-center overflow-x-hidden overflow-y-scroll rounded-b-xl bg-gray-800/60 p-1 @md:p-4"
     >
       @for (commanderDamage of player().commanderDamage; track $index; let playerIndex = $index) {
         <div class="flex items-center">
@@ -81,7 +81,7 @@
             @if (damageCount > 0) {
               <button
                 matButton
-                class="text-white! text-border-sm-gray-800 min-w-20!"
+                class="text-border-sm-gray-800 min-w-20! text-white!"
                 [class.opacity-100]="isSelected"
                 [class.bg-black!]="isSelected"
                 (click)="toggleCommanderDamageSource({ playerIndex, commanderIndex })"
@@ -92,7 +92,7 @@
             } @else {
               <button
                 matIconButton
-                class="text-white! opacity-60 min-w-20"
+                class="min-w-20 text-white! opacity-60"
                 [class.opacity-100]="isSelected"
                 [class.bg-black!]="isSelected"
                 (click)="toggleCommanderDamageSource({ playerIndex, commanderIndex })"
